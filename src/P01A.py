@@ -22,7 +22,7 @@ class Sword:
        self.pommel_radius = 0.2
 
     def build_blade(self):
-        blade_name, _ = cmds.polycube(height=self.blade_length, 
+        blade_name, _ = cmds.polyCube(height=self.blade_length, 
                                       width=self.blade_width,
                                       depth=self.blade_thickness,
                                       name="blade1")
@@ -30,3 +30,12 @@ class Sword:
         # position of the blade vertically 
         cmds.xform(blade_name, translation=[0, self.blade_length / 2.0 + self.gaurd_height, 0])
         return blade_name
+    
+    def build_gaurd(self):
+        gaurd_name, _ = cmds.polyCube(height=self.gaurd_height, 
+                                      width=self.gaurd_width,
+                                      depth=self.gaurd_thickness, name="gaurd1")
+        
+        # position at base of blade
+        cmds.xform(gaurd_name, translation=[0, self.gaurd_height / 2.0, 0])
+        return gaurd_name
