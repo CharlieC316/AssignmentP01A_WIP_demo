@@ -17,6 +17,12 @@ class Sword:
 
         self.pommel_radius = 0.2
 
+    def clear_existing(self):
+        """Deletes the existing sword before rebuilding"""
+        if self.sword_group and cmds.objExists(self.sword_group):
+            cmds.delete(self.sword_group)
+            self.sword_group = None
+
     def build_blade(self):
         blade_name, _ = cmds.polyCube(
             height=self.blade_length,
@@ -72,6 +78,33 @@ class Sword:
         sword_group = cmds.group(parts, name="sword")
         print("Sword created!")
         return sword_group
+    
+    #UI Controller
+class SwordUI:
+    def __init__(self):
+        self.sword = Sword()
+        self.window = "SwordBuilderWin"
+        self.create_ui()
+
+    def create_ui(self):
+        if cmds.window(self.window, exist=True):
+            cmds.deleteUI(self.window)
+
+        self.window = cmds.window(self.window, title= "Sword Builder", widthHeight=(300,400))
+        cmds.columnLayout(adjustableColumn=True, rowSpacing=5)
+
+        cmds.text(label="Adjust the sword parameters, then click Rebuild", align="center")
+
+        # -- Blade controls --
+        self.blade_length_slider = cmds.floatSliderGrp(label="Blade Length", field=True, min=1, max=15, value=self.sword.blade_length)
+        self.blade_width_slider = cmds.floatSliderGrp(label="Blade Width", field=True, min=0.05, max=1.0, value=self.sword.blade_width)
+        self.blade_thickness_slider = cmds.floatSliderGrp(label="Blade Thickness", field=True, min=0.05, max=1.0, value=self.sword.blade_thickness)
+
+        # -- Handle Controls --
+
+
+
+
 
 # Example usage
 if __name__ == "__main__":
