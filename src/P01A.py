@@ -152,7 +152,7 @@ class SwordUI:
 
     def delete_sword(self, *args):
         self.sword.clear_existing()
-        print("🧹 Sword deleted.")
+        print("Sword deleted.")
 
 
 if __name__ == "__main__":
