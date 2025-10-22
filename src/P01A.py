@@ -101,21 +101,27 @@ class SwordUI:
         self.blade_thickness_slider = cmds.floatSliderGrp(label="Blade Thickness", field=True, min=0.05, max=1.0, value=self.sword.blade_thickness)
 
         # -- Handle Controls --
+        self.handle_length_slider = cmds.floatSliderGrp(label="Handle Length", field=True, min=0.5, max=5, value=self.sword.handle_length)
+        self.handle_radius_slider = cmds.floatSliderGrp(label="Handle Radius", field=True, min=0.05, max=1.0, value=self.sword.handle_radius)
 
+    def rebuild_sword(self, *args):
+        """Reads slider values and rebuilds the sword"""
+        self.sword.blade_length = cmds.floatSliderGrp(self.blade_length_slider, query=True, value=True)
+        self.sword.blade_width = cmds.floatSliderGrp(self.blade_width_slider, query=True, value=True)
+        self.sword.blade_thickness = cmds.floatSliderGrp(self.blade_thickness_slider, query=True, value=True)
+        self.sword.handle_length = cmds.floatSliderGrp(self.handle_length_slider, query=True, value=True)
+        self.sword.handle_radius = cmds.floatSliderGrp(self.handle_radius_slider, query=True, value=True)
+        self.sword.pommel_radius = cmds.floatSliderGrp(self.pommel_radius_slider, query=True, value=True)
+
+        self.sword.build()
+
+    def delete_sword(self, *args):
+        self.sword.clear_existing()
+        print("Sword deleted.")
 
 
 
 
 # Example usage
 if __name__ == "__main__":
-    sword = Sword()
-    
-    # Customize your sword here
-    sword.blade_length = 8
-    sword.blade_width = 0.3
-    sword.blade_thickness = 0.1
-    sword.handle_length = 2.0
-    sword.pommel_radius = 0.25
-    
-    sword.build()
-
+    SwordUI()
