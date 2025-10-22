@@ -49,3 +49,13 @@ class Sword:
         y_pos = -self.handle_length / 2.0
         cmds.xform(handle_name, translation=[0, y_pos, 0])
         return handle_name
+    
+    def build_pommel(self):
+        pommel_name = cmds.polySphere(radius=self.pommel_radius,
+                                      subdivisionsX=16,
+                                      subdivisionsY=8,
+                                      name="pommel1")[0]
+        
+        y_pos = -self.handle_length - self.pommel_radius 
+        cmds.xform(pommel_name, tranlation=[0, y_pos, 0])
+        return pommel_name
